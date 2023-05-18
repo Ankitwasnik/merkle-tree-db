@@ -1,5 +1,6 @@
 use super::{DBValue, Hasher, NodeError};
 use core::ops::Deref;
+use core::fmt::Debug;
 
 // NodeHash
 // ================================================================================================
@@ -18,8 +19,8 @@ pub enum NodeHash<H: Hasher> {
     Default(H::Out),
 }
 
-impl<H: Hasher> core::fmt::Display for NodeHash<H> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl<H: Hasher> core::fmt::Display for NodeHash<H> where H: Hasher {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result where <H as hash_db::Hasher>::Out: Debug {
         match self {
             NodeHash::InMemory(hash) => write!(f, "InMemory({hash:?})"),
             NodeHash::Database(hash) => write!(f, "Database({hash:?})"),
@@ -116,7 +117,7 @@ pub enum Node<H: Hasher> {
 }
 
 impl<H: Hasher> std::fmt::Display for Node<H> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result where <H as hash_db::Hasher>::Out: Debug {
         match self {
             Node::Value { hash, value } => write!(f, "Value({hash:?}, {value:?})"),
             Node::Inner { hash, left, right } => write!(f, "Inner({hash:?}, {left}, {right})"),
