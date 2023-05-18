@@ -1,5 +1,3 @@
-use hash_db::MaybeDebug;
-
 use super::{DBValue, Hasher, NodeError};
 use core::ops::Deref;
 
@@ -20,7 +18,7 @@ pub enum NodeHash<H: Hasher> {
     Default(H::Out),
 }
 
-impl<H: Hasher> core::fmt::Display for NodeHash<H> {
+/* impl<H: Hasher> core::fmt::Display for NodeHash<H> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result where <H as hash_db::Hasher>::Out: MaybeDebug {
         match self {
             NodeHash::InMemory(hash) => write!(f, "InMemory({hash:?})"),
@@ -28,7 +26,7 @@ impl<H: Hasher> core::fmt::Display for NodeHash<H> {
             NodeHash::Default(hash) => write!(f, "Default({hash:?})"),
         }
     }
-}
+} */
 
 impl<H: Hasher> NodeHash<H> {
     /// Returns the inner hash of a node
@@ -117,14 +115,14 @@ pub enum Node<H: Hasher> {
     },
 }
 
-impl<H: Hasher> std::fmt::Display for Node<H> {
+/* impl<H: Hasher> std::fmt::Display for Node<H> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result where <H as hash_db::Hasher>::Out: MaybeDebug {
         match self {
             Node::Value { hash, value } => write!(f, "Value({hash:?}, {value:?})"),
             Node::Inner { hash, left, right } => write!(f, "Inner({hash:?}, {left}, {right})"),
         }
     }
-}
+} */
 
 /// Node implementation
 impl<H: Hasher> Node<H> {
